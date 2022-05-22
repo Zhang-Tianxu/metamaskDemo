@@ -22,6 +22,7 @@
               <h4 class="card-title">Basic Actions</h4>
               <button class="btn btn-primary btn-lg btn-block mb-3" id="connectButton" disabled></button>
               <button class="btn btn-primary btn-lg btn-block mb-3" id="getAccounts">eth_accounts</button>
+              <button class="btn btn-primary btn-lg btn-block mb-3" id="getOpenseaNFTs">NFTs</button>
               <p class="info-text alert alert-secondary">eth_accounts result: <span id="getAccountsResult"></span></p>
             </div>
           </div>
@@ -31,7 +32,9 @@
   </main>
 
   <script src="node_modules/@metamask/onboarding/dist/metamask-onboarding.bundle.js" defer></script>
+  <script src="https://code.jquery.com/jquery-1.6.4.js"></script>
   <script src="contract.js" defer></script>
+  <script src="openseaAPI.js" defer></script>
 </body>
 
 </html>
