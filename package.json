@@ -25,7 +25,8 @@
   "homepage": "",
   "dependencies": {
     "@metamask/onboarding": "^1.0.1",
-    "api": "^4.5.1"
+    "api": "^4.5.1",
+    "web3": "^1.7.3"
   },
   "devDependencies": {
     "@metamask/eslint-config": "^2.0.0",

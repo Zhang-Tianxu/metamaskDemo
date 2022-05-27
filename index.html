@@ -22,8 +22,10 @@
               <h4 class="card-title">Basic Actions</h4>
               <button class="btn btn-primary btn-lg btn-block mb-3" id="connectButton" disabled></button>
               <button class="btn btn-primary btn-lg btn-block mb-3" id="getAccounts">eth_accounts</button>
-              <button class="btn btn-primary btn-lg btn-block mb-3" id="getOpenseaNFTs">NFTs</button>
               <p class="info-text alert alert-secondary">eth_accounts result: <span id="getAccountsResult"></span></p>
+              <button class="btn btn-primary btn-lg btn-block mb-3" id="getOpenseaNFTs">mint NFT</button>
+              <button class="btn btn-primary btn-lg btn-block mb-3" id="getNFTNumber">查询NFT数量</button>
+              <p class="info-text alert alert-secondary">你拥有的NFT数量: <span id="result"></span></p>
             </div>
           </div>
         </div>
@@ -33,6 +35,8 @@
 
   <script src="node_modules/@metamask/onboarding/dist/metamask-onboarding.bundle.js" defer></script>
   <script src="https://code.jquery.com/jquery-1.6.4.js"></script>
+  <script type="text/javascript" src="./node_modules/web3/dist/web3.min.js"></script>
+  <script src="vokaNFTABI.js" defer></script>
   <script src="contract.js" defer></script>
   <script src="openseaAPI.js" defer></script>
 </body>
