@@ -8,6 +8,9 @@ var web3 = new Web3(web3Provider);
 var vokaNFTContract = new web3.eth.Contract(contract_abi, contract_address);
 
 const initialize = () => {
+	var isMetaMaskConnected = false;
+	var isMetaMaskUnlocked = false;
+
 	const getAccountsResult = document.getElementById('getAccountsResult');
 	const getAccountsButton = document.getElementById('getAccounts');
 	const onboardButton = document.getElementById('connectButton');
@@ -16,14 +19,16 @@ const initialize = () => {
 	const NFTNumerResult = document.getElementById('result');
 
 	const onClickInstall = () => {
+		// 点击安装metamask
 		onboardButton.innerText = 'Onboarding in progress';
 		onboardButton.disabled = true;
 		//On this object we have startOnboarding which will start the onboarding process for our end user
 		onboarding.startOnboarding();
 	};
+
 	const onClickConnect = async () => {
+		// 点击连接metamask
 		try {
-			console.log("connect");
 			// Will open the MetaMask UI
 			// You should disable this button while the request is pending!
 			await ethereum.request({ method: 'eth_requestAccounts' });
@@ -33,14 +38,16 @@ const initialize = () => {
 	};
 
 	//Created check function to see if the MetaMask extension is installed
+	// 检查metaMask插件是否已经安装
 	const isMetaMaskInstalled = () => {
 		//Have to check the ethereum binding on the window object to see if it's installed
 		const { ethereum } = window;
 		return Boolean(ethereum && ethereum.isMetaMask);
 	};
+
 	//------Inserted Code------\\
 	const MetaMaskClientCheck = () => {
-		//Now we check to see if MetaMask is installed
+		// Now we check to see if MetaMask is installed
 		if (!isMetaMaskInstalled()) {
 			//If it isn't installed we ask the user to click to install it
 			onboardButton.innerText = 'Click here to install MetaMask!';
@@ -49,12 +56,17 @@ const initialize = () => {
 			//The button is now disabled
 			onboardButton.disabled = false;
 		} else {
-			//If it is installed we change our button text
-			onboardButton.innerText = 'Connect';
-			//When the button is clicked we call this function to connect the users MetaMask Wallet
-			onboardButton.onclick = onClickConnect;
-			//The button is now disabled
-			onboardButton.disabled = false;
+			ethereum._metamask.isUnlocked().then(unlocked => {
+				isMetaMaskUnlocked = unlocked;
+			});
+			isMetaMaskConnected = ethereum.isConnected();
+			if(ethereum.isConnected()) {
+				onboardButton.innerText = 'MetaMask已连接';
+			} else {
+				onboardButton.innerText = 'Connect';
+				onboardButton.onclick = onClickConnect;
+				onboardButton.disabled = false;
+			}
 		}
 	};
 
@@ -99,6 +111,9 @@ const initialize = () => {
 	MetaMaskClientCheck();
 	//Eth_Accounts-getAccountsButton
 	getAccountsButton.addEventListener('click', async () => {
+		if(!isMetaMaskUnlocked) {
+			alert("请先解锁MetaMask");
+		}
 		//we use eth_accounts because it returns a list of addresses owned by us.
 		const accounts = await ethereum.request({ method: 'eth_accounts' });
 		//We take the first address in the array of addresses and display it
